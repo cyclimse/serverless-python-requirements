@@ -66,6 +66,10 @@ class ServerlessPythonRequirements {
         this.serverless.service.custom.pythonRequirements) ||
         {}
     );
+    if (/python3[0-9]+/.test(options.pythonBin)) {
+      // "google" and "scaleway" providers' runtimes uses python3XX
+      options.pythonBin = options.pythonBin.replace(/3([0-9]+)/, '3.$1');
+    }
     if (options.dockerizePip === 'non-linux') {
       options.dockerizePip = process.platform !== 'linux';
     }
